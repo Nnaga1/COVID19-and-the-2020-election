@@ -14259,8 +14259,9 @@ a.anchor-link {
 
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><center><div style="font-size: 40px"> <b>2020 Presidential Election: From a Data Science Perspective</b> </center>
-<br><br><br></p>
+<center><div style="font-size: 40px"> <b>2020 Presidential Election: From a Data Science Perspective</b> </center>
+<br><br><br>
+<center><div style="font-size: 30px"> <b>by Naga Nageswaran, Daniel Gao, and Matt Frohman</b> </center><p><br><br><br><br></p>
 
 </div>
 </div>
@@ -14286,7 +14287,7 @@ The U.S. recently underwent a presidential election for the year of 2020. In one
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<center><div style="font-size: 30px"> <b>Data Collection</b> </center><p>The first thing we need to do is obtain the election data at <a href="https://www.kaggle.com/imoore/2020-us-general-election-turnout-rates?select=2020+November+General+Election+-+Turnout+Rates.csv">https://www.kaggle.com/imoore/2020-us-general-election-turnout-rates?select=2020+November+General+Election+-+Turnout+Rates.csv</a> and <a href="https://www.kaggle.com/etsc9287/2020-general-election-polls">https://www.kaggle.com/etsc9287/2020-general-election-polls</a>.  We then read them into a dataframe using pandas, which allows us to perform operations on the rows and columns of data.</p>
+<center><div style="font-size: 30px"> <b>Data Collection</b> </center><p>The first thing we need to do is obtain the election data at <a href="https://www.kaggle.com/imoore/2020-us-general-election-turnout-rates?select=2020+November+General+Election+-+Turnout+Rates.csv">https://www.kaggle.com/imoore/2020-us-general-election-turnout-rates?select=2020+November+General+Election+-+Turnout+Rates.csv</a>.  We then read them into a dataframe using pandas, which allows us to perform operations on the rows and columns of data.</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -14461,7 +14462,7 @@ The U.S. recently underwent a presidential election for the year of 2020. In one
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>For our coronavirus data, we obtained that data from <a href="https://www.kaggle.com/etsc9287/2020-general-election-polls">https://www.kaggle.com/etsc9287/2020-general-election-polls</a>, the data turns into a massive table with hundreds of counties and many different column indicators such as if the person has a child or not for example. We will later operate on this data to accumulate the values we need. It is important to distinguish that this data, in relation to coronavirus, is up until November 1st, one of the most anticipated polling days pre-election.</p>
+<p>For our coronavirus data, we obtained that data from <a href="https://www.kaggle.com/etsc9287/2020-general-election-polls">https://www.kaggle.com/etsc9287/2020-general-election-polls</a>, the data turns into a massive table with hundreds of counties and many different column indicators such as if the person has a child or not for example. We will later operate on this data to accumulate and curate the values we need. It is important to distinguish that this data, in relation to coronavirus, is up until November 1st, one of the most anticipated polling days pre-election.</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -14675,7 +14676,7 @@ The U.S. recently underwent a presidential election for the year of 2020. In one
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>For the data processing step, we tailored the pandas data object to only show what we needed. However, with a table that consists of hundreds of different indicators and values, there will need to be some additional steps. First, we replaced all of the whole numbers of the graphs, such as votes counted (this cannot be a decimal because that wouldn't make sense) as ints, after string processing them. We then only included the values we needed for the turnout table, which was the Total Ballots Counted, Voting Elligible Population (VEP),Voting Age Population (VAP), and % citizen. Now for the somewhat complicated part, since the covid data was demographical, it came by each individual counties. For processing this data, we identified what state each county was in, and made separate dataframe objects containing the counties for each state. We then need to merge all the counties together, which we did by using the sum function. Now the final step was to merge the two respective tables into one coherent table, which can be done easily using pandas merge, however,it needs one column indicator in common between the two graphs. So we used state abbreviationa as a common indicator, which required us to add that column by combing through each state and inserting the value for the Covid data. After replacing the column names with some more presentable names such as "Trump Votes" instead of "trump_20_votes," our table is finally ready. Our table contains Trump's and Biden's votes, the VEP and VAP, Coronavirus cases and deaths, the ratio of citizens to non-citizens, and State/Region indicators (based on the National Geographic United States regional index).</p>
+<p>For the data processing step, we tailored the pandas data object to only show what we needed. However, with a table that consists of hundreds of different indicators and values, there will need to be some additional steps. In our COVID table, there were many NaN values, as some counties had failed to report some of their information sometimes (such as coronavirus cases). We replaced all NaN values with 0. We then replaced all of the whole numbers of the graphs, such as votes counted (this cannot be a decimal because that wouldn't make sense) as ints, after string processing them. We then only included the values we needed for the turnout table, which was the Total Ballots Counted, Voting Elligible Population (VEP),Voting Age Population (VAP), and % citizen. Now for the somewhat complicated part, since the covid data was demographical, it came by each individual counties. For processing this data, we identified what state each county was in, and made separate dataframe objects containing the counties for each state. We then need to merge all the counties together, which we did by using the sum function, into one row of data for that specific state. Now the final step was to merge the two respective tables into one coherent table, which can be done easily using pandas merge, however, it needs one column indicator in common between the two graphs. So we used state abbreviationa as a common indicator, which required us to add that column by combing through each state and inserting the value of its State Abbreviation in the Covid table. After replacing the column names with some more presentable names such as "Trump Votes" instead of "trump_20_votes," our table is finally ready. Our table contains Trump's and Biden's votes, the VEP and VAP rates, Coronavirus cases and deaths, the ratio of citizens to non-citizens, and State/Region indicators (based on the National Geographic United States regional index).</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -15887,7 +15888,7 @@ The U.S. recently underwent a presidential election for the year of 2020. In one
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>Below are 2 double bar graphs to help us visualize some of the data we obtained.</p>
-<p>The first bar graph shows data for the top 25 VEP Turnonut states, and the second bar grap shows data for the bottom 25 VEP Turnout states.  With State on the x-axis and perecentage on the y-axis, these double bar graphs show both the turnout rate and the covid rate for each state.  Before we do any type of analysis, at first glance, it seems like the states with highest turnout have generally lower covid rates compared to the states with the lowest turnout.  Below,we aim to perform linear regression analysis of whether or not this is true.</p>
+<p>The first bar graph shows data for the top 25 VEP Turnonut states, and the second bar graph shows data for the bottom 25 VEP Turnout states.  With State on the x-axis and perecentage on the y-axis, these double bar graphs show both the turnout rate and the covid rate for each state.  Before we do any type of analysis, at first glance, it seems like the states with highest turnout have generally lower covid rates compared to the states with the lowest turnout.  Below,we aim to perform linear regression analysis of whether or not this is true.</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -24344,7 +24345,7 @@ z
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Now on the flipside from what we analyzed before this, we take a look on who the states with the least ratio of Covid cases to Population ratio and who they respectively voted for. However, it is important to distinguish some outliers in this case, since Hawaii and Alaska are not as affected from the Coronavirus as the other states, their ratio is obviously going to be very good as they haven't been nearly as affected by the spread of the virus as mainland states. Looking at the other conglomerate of states, we can see that Trump usually leads overall, with the exception of California, which has historically been blue.</p>
+<p>Now on the flipside from what we analyzed before this, we take a look on who the states with the least ratio of Covid cases to Population ratio and who they respectively voted for. However, it is important to distinguish some outliers in this case, since Hawaii and Alaska are not as affected from the Coronavirus as the other states, their ratio is obviously going to be very good as they haven't been nearly as affected by the spread of the virus as mainland states due to various geographic travel barriers. Looking at the other conglomerate of states, we can see that Trump usually leads overall, with the exception of California, which has historically been blue.</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -27634,7 +27635,7 @@ z
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Taking a step back from the election, let's look at where Coronavirus really hurt the United States, in a regional sense, here we use the regional data that we included before to create a pie chart. This pie chart shows the distribution of the Coronavirus cases across the different geographical regions. We note that the Southeast has the highest percent and the Southwest has the lowest percent. What this means, in a numerical term, is that of all the cases counted as of November 1st, 32.9% of them came from the Southeastern states.</p>
+<p>Taking a step back from the election, let's look at where Coronavirus really hurt the United States, in a regional sense, here we use the regional data that we included before to create a pie chart. This pie chart shows the distribution of the Coronavirus cases across the different geographical regions. We note that the Southeast has the highest percent and the Southwest has the lowest percent. What this means, in a numerical term, is that of all the cases counted up to November 1st, 32.9% of them came from the Southeastern states.</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -30151,7 +30152,7 @@ z
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Now we move on to look at the region with the most cases of coronavirus, which is the Southeastern region. Since there is a multitude of states in this region, it is apparent as to why they would have high coronavirus rates. However, most of these states don't come close to the populations of New York or California, so we can observe that since there are many states, they all consist of high rates compared to the rest of the country. Here we can see something a bit different from the Southwest region, here VEP % ranged from 55-about 70, so we can see that there is a bit of an increase of turnout rate compared to the Southwest.</p>
+<p>Now we move on to look at the region with the most cases of coronavirus, which is the Southeastern region. Since there is a multitude of states in this region, it is apparent as to why they would have high coronavirus rates. However, most of these states don't come close to the populations of New York or California, so we can observe that since there are many states of not record-holding populations, they all consist of high rates compared to the rest of the country. Here we can see something a bit different from the Southwest region, here VEP % ranged from 55-about 70, so we can see that there is a bit of an increase of turnout rate compared to the Southwest.</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -32150,7 +32151,7 @@ z
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Now we can take a look at how citizens and non-citizens voted. Below are both the graphs analyzing the data for the top and bottom 10 states with the highest ratio of non-citizens. Looking at the top 10 states with the highest % of non-citizens, we can see that majority of the states voted for Trump. States such as Texas and Arizona are right next to the border, so they would have a higher number of non-citizens. We can see after analyzing the graph, that many of the states that had a higher % of non-citizens voted for Trump.</p>
+<p>Now we can take a look at how citizens and non-citizens voted. Below are both the graphs analyzing the data for the top and bottom 10 states with the highest ratio of non-citizens. Looking at the top 10 states with the highest % of non-citizens, we can see that majority of the states voted for Trump. States such as Texas and Arizona are right next to the border, so they would have a higher number of non-citizens. The Great American Rust belt has always been red throughout our history so that's no suprise. We can see after analyzing the graph, that many of the states that had a higher % of non-citizens voted for Trump.</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
